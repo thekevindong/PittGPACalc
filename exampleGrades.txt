@@ -1,0 +1,25 @@
+# University of Pittsburgh Grades - Example File
+# Format: "Course Name" CREDITS GRADE
+# Lines starting with # are ignored
+# Exclude Transfer, S grades, and In Progress courses
+## You can leave the course names blank if you wish lol
+
+"Foundations of Biology Research Lab 1" 1 A
+"Foundations of Biology Research Lab 2" 1 A+
+"Genetics" 3 A-
+"Ecology" 3 A
+"Computational Biology" 3 A
+"Microbiology" 3 A
+"Organic Chemistry 1" 3 A
+"Organic Chemistry 2" 3 A
+"Organic Laboratory" 2 A-
+"Algorithms & Data Structures 1" 3 A
+"Computer Organization & Assembly" 3 A
+"Algorithms Data Structures 2" 3 A+
+"Russian Film Stalin to Putin" 3 A
+"Marx and Marxism" 3 A+
+"Mind and Medicine" 3 A
+"Morality and Medicine" 3 A+
+"Intermediate Piano" 3 A
+"Intro to Laboratory Physics" 2 A
+"" 0 A
