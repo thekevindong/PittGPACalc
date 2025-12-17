@@ -107,7 +107,7 @@ if __name__ == "__main__":
     import sys
     
     if len(sys.argv) != 2:
-        print("\nUsage: python3 pitt_gpa_calculator.py <grades_file.txt>")
+        print("\nUsage: python3 pittGPA.py <grades_file.txt>")
         print('\nFile format: "Course Name" CREDITS GRADE')
         print('Example:')
         print('  "Big Ideas in Computing" 4 A+')
