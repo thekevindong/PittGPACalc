@@ -1,0 +1,56 @@
+/* Base Layout and Structure */
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background: #0a0e27;
+  background-image: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 8px,
+      rgba(0, 53, 148, 0.15) 8px,
+      rgba(0, 53, 148, 0.15) 10px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 8px,
+      rgba(0, 53, 148, 0.15) 8px,
+      rgba(0, 53, 148, 0.15) 10px
+    ),
+    radial-gradient(
+      circle at 20% 50%,
+      rgba(0, 53, 148, 0.2) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 80%,
+      rgba(78, 204, 163, 0.1) 0%,
+      transparent 50%
+    );
+  min-height: 100vh;
+  padding: 20px;
+  image-rendering: pixelated;
+}
+
+.container {
+  max-width: 810px;
+  margin: 0 auto;
+  animation: fadeIn 0.5s ease-in;
+  transform: scale(0.9);
+  transform-origin: top center;
+}
+
+input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+select option {
+  background: #0f3460;
+}

@@ -1,0 +1,46 @@
+/* Header Styles */
+
+.header {
+  background: linear-gradient(135deg, #003594 0%, #0047ab 100%);
+  border: 4px solid #ffb81c;
+  padding: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.header::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent,
+    rgba(255, 255, 255, 0.05),
+    transparent
+  );
+  animation: shine 3s infinite;
+}
+
+h1 {
+  color: #ffb81c;
+  font-family: "Press Start 2P", cursive;
+  font-size: 1.1rem;
+  position: relative;
+  z-index: 1;
+  text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+h1 .emoji {
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
+  font-size: 1.1rem;
+}

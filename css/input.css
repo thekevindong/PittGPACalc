@@ -1,0 +1,45 @@
+/* Input Panel Styles */
+
+.input-panel {
+  background: linear-gradient(135deg, #16213e 0%, #1a2942 100%);
+  border: 3px solid #003594;
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.input-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.5fr;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+label {
+  display: block;
+  color: #ffb81c;
+  font-size: 0.6rem;
+  margin-bottom: 4px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 8px;
+  background: #0f3460;
+  border: 2px solid #003594;
+  color: #fff;
+  font-family: "Inter", sans-serif;
+  font-size: 0.8rem;
+  transition: all 0.3s;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: #4ecca3;
+  box-shadow: 0 0 10px rgba(78, 204, 163, 0.3);
+}

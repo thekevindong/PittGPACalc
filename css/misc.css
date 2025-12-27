@@ -1,0 +1,44 @@
+/* Miscellaneous Styles */
+
+.info-note {
+  background: #533483;
+  border: 3px solid #ffb81c;
+  padding: 15px;
+  color: #fff;
+  font-size: 0.75rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .input-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .grade-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .results-grid {
+    grid-template-columns: 1fr;
+  }
+
+  h1 {
+    font-size: 1rem;
+  }
+
+  .gpa-big {
+    font-size: 3rem;
+  }
+
+  .semester-header {
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+  }
+
+  .semester-stats {
+    flex-direction: column;
+    gap: 8px;
+  }
+}

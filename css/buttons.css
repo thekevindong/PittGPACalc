@@ -1,0 +1,89 @@
+/* Button Styles */
+
+.btn {
+  padding: 8px 16px;
+  border: 3px solid #000;
+  font-family: "Inter", sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: all 0.2s;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.3);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.3);
+}
+
+.btn:active {
+  transform: translateY(1px);
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3);
+}
+
+.btn-add {
+  background: #4ecca3;
+  color: #000;
+}
+
+.btn-calc {
+  background: #ffb81c;
+  color: #000;
+}
+
+.btn-remove {
+  background: #e84545;
+  color: #fff;
+  padding: 8px 16px;
+  font-size: 0.75rem;
+}
+
+.btn-edit {
+  background: #4ecca3;
+  color: #000;
+  padding: 8px 16px;
+  font-size: 0.75rem;
+  margin-right: 8px;
+}
+
+.btn-clear {
+  background: #e84545;
+  color: #fff;
+}
+
+.btn-grade-scale {
+  background: #4ecca3;
+  color: #000;
+  border: 3px solid #000;
+  padding: 8px 16px;
+  font-family: "Inter", sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: all 0.2s;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.3);
+}
+
+.btn-grade-scale:hover {
+  transform: translateY(-2px);
+  box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.3);
+}
+
+.btn-grade-scale:active {
+  transform: translateY(1px);
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3);
+}
+
+.button-row {
+  display: flex;
+  gap: 10px;
+}
+
+.utility-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-bottom: 15px;
+}
