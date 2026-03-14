@@ -1,7 +1,6 @@
 // Data Management - Course storage and sample data
-
-// Pre-load with user's actual courses
-var courses = [
+// Pre-load with user's actual courses as default fallback
+var defaultCourses = [
   {
     name: "CMPINF 0401 - Intermediate Programming",
     credits: 4,
@@ -93,5 +92,12 @@ var courses = [
     gradeLabel: "A+",
     semester: "Fall 2024",
   },
-
 ];
+
+// Load from localStorage if available, otherwise use default courses
+var courses = JSON.parse(localStorage.getItem("pittGPACalc_courses")) || defaultCourses;
+
+// Save courses to localStorage
+function saveCourses() {
+  localStorage.setItem("pittGPACalc_courses", JSON.stringify(courses));
+}
