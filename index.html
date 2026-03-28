@@ -1,349 +1,208 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pitt GPA Calculator</title>
-    <link
-      rel="icon"
-      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>"
-    />
-    <link rel="stylesheet" href="css/base.css" />
-    <link rel="stylesheet" href="css/header.css" />
-    <link rel="stylesheet" href="css/stats.css" />
-    <link rel="stylesheet" href="css/input.css" />
-    <link rel="stylesheet" href="css/buttons.css" />
-    <link rel="stylesheet" href="css/courses.css" />
-    <link rel="stylesheet" href="css/results.css" />
-    <link rel="stylesheet" href="css/modal.css" />
-    <link rel="stylesheet" href="css/misc.css" />
-    <link rel="stylesheet" href="css/animations.css" />
-    <link rel="stylesheet" href="css/profiles.css" />
-  </head>
-  <body>
-    <!-- Top-Left Toolbar (fixed, collapsible) -->
-    <div class="toolbar" id="toolbar">
-      <button
-        class="toolbar-toggle"
-        id="toolbarToggle"
-        onclick="toggleToolbar()"
-      >
-        ☰ Menu
-      </button>
-      <div class="toolbar-content" id="toolbarContent">
-        <div class="toolbar-section">
-          <div class="toolbar-label">Profiles</div>
-          <div class="toolbar-profiles">
-            <div class="profile-tabs" id="profileTabs"></div>
-            <button
-              class="btn-toolbar"
-              onclick="openProfileModal('add')"
-              title="Add Profile"
-            >
-              + New Profile
-            </button>
-          </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pitt GPA Calculator</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/header.css" />
+  <link rel="stylesheet" href="css/stats.css" />
+  <link rel="stylesheet" href="css/input.css" />
+  <link rel="stylesheet" href="css/buttons.css" />
+  <link rel="stylesheet" href="css/courses.css" />
+  <link rel="stylesheet" href="css/results.css" />
+  <link rel="stylesheet" href="css/modal.css" />
+  <link rel="stylesheet" href="css/misc.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/profiles.css" />
+</head>
+<body>
+  <!-- Top-Left Toolbar (fixed, collapsible) -->
+  <div class="toolbar" id="toolbar">
+    <button class="toolbar-toggle" id="toolbarToggle" onclick="toggleToolbar()">☰ Menu</button>
+    <div class="toolbar-content" id="toolbarContent">
+      <div class="toolbar-section">
+        <div class="toolbar-label">Profiles</div>
+        <div class="toolbar-profiles">
+          <div class="profile-tabs" id="profileTabs"></div>
+          <button class="btn-toolbar" onclick="openProfileModal('add')" title="Add Profile">+ New Profile</button>
         </div>
-        <div class="toolbar-divider"></div>
-        <div class="toolbar-section">
-          <div class="toolbar-label">Tools</div>
-          <div class="toolbar-tools">
-            <button class="btn-toolbar" onclick="openWeightedCalc()">
-              ⚖️ Weighted Grade Calculator
-            </button>
-            <button class="btn-toolbar" onclick="openGradeScale()">
-              📊 Grade Scale
-            </button>
-          </div>
+      </div>
+      <div class="toolbar-divider"></div>
+      <div class="toolbar-section">
+        <div class="toolbar-label">Tools</div>
+        <div class="toolbar-tools">
+          <button class="btn-toolbar" onclick="openWeightedCalc()">⚖️ Weighted Grade Calculator</button>
+          <button class="btn-toolbar" onclick="openGradeScale()">📊 Grade Scale</button>
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="container">
-      <!-- Header -->
-      <div class="header">
-        <p
-          style="
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 0.55rem;
-            margin-bottom: 6px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-          "
-        >
-          University of Pittsburgh
-        </p>
-        <h1>GPA CALCULATOR <span class="emoji">🎓</span></h1>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <p style="color: rgba(255,255,255,0.6); font-size: 0.55rem; margin-bottom: 6px; letter-spacing: 2px; text-transform: uppercase;">University of Pittsburgh</p>
+      <h1>GPA CALCULATOR <span class="emoji">🎓</span></h1>
+    </div>
+
+    <!-- Stats Bar -->
+    <div class="stats-bar">
+      <div class="stat-item">
+        <div class="stat-label">GPA</div>
+        <div class="stat-value" id="currentGPA">0.000</div>
       </div>
-
-      <!-- Stats Bar -->
-      <div class="stats-bar">
-        <div class="stat-item">
-          <div class="stat-label">GPA</div>
-          <div class="stat-value" id="currentGPA">0.000</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-label">Credits</div>
-          <div class="stat-value" id="totalCredits">0</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-label">Courses</div>
-          <div class="stat-value" id="courseCount">0</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-label">Quality Pts</div>
-          <div class="stat-value" id="qualityPoints">0.00</div>
-        </div>
+      <div class="stat-item">
+        <div class="stat-label">Credits</div>
+        <div class="stat-value" id="totalCredits">0</div>
       </div>
-
-      <!-- Input Panel -->
-      <div class="input-panel">
-        <div class="input-grid">
-          <div>
-            <label for="courseName">Course Name</label>
-            <input
-              type="text"
-              id="courseName"
-              placeholder="e.g. CS 1501 - Algorithms II"
-            />
-          </div>
-          <div>
-            <label for="credits">Credits</label>
-            <input type="number" id="credits" value="3" min="1" max="12" />
-          </div>
-          <div>
-            <label for="grade">Grade</label>
-            <select id="grade">
-              <option value="4.00">A+</option>
-              <option value="4.00">A</option>
-              <option value="3.75">A-</option>
-              <option value="3.25">B+</option>
-              <option value="3.00">B</option>
-              <option value="2.75">B-</option>
-              <option value="2.25">C+</option>
-              <option value="2.00">C</option>
-              <option value="1.75">C-</option>
-              <option value="1.25">D+</option>
-              <option value="1.00">D</option>
-              <option value="0.75">D-</option>
-              <option value="0.00">F</option>
-              <option value="S">S</option>
-              <option value="NC">NC</option>
-              <option value="T">T</option>
-            </select>
-          </div>
-          <div>
-            <label for="semester">Semester (Optional)</label>
-            <input type="text" id="semester" placeholder="e.g. (3) Fall 2025" />
-          </div>
-        </div>
-        <div class="button-row">
-          <button class="btn btn-add" onclick="addCourse()">
-            + Add Course
-          </button>
-          <button class="btn btn-calc" onclick="showResults()">
-            Calculate GPA
-          </button>
-        </div>
+      <div class="stat-item">
+        <div class="stat-label">Courses</div>
+        <div class="stat-value" id="courseCount">0</div>
       </div>
-
-      <!-- Utility Buttons -->
-      <div class="utility-buttons">
-        <button class="btn btn-grade-scale" onclick="exportTxt()">
-          📥 Export .txt
-        </button>
-        <button
-          class="btn btn-grade-scale"
-          onclick="document.getElementById('importFile').click()"
-        >
-          📤 Import .txt
-        </button>
-        <input
-          type="file"
-          id="importFile"
-          accept=".txt"
-          style="display: none"
-          onchange="importTxt(event)"
-        />
-        <button class="btn btn-clear" onclick="clearAllCourses()">
-          🗑️ Clear All
-        </button>
-      </div>
-
-      <!-- Courses Container -->
-      <div id="coursesContainer"></div>
-
-      <!-- Results Area -->
-      <div id="resultsArea"></div>
-
-      <!-- Info Note -->
-      <div class="info-note">
-        NOTE: Exclude Transfer credits, S/NC grades, and In Progress courses
-        from GPA calculation. S, NC, and T grades are tracked but do not affect
-        your GPA.
+      <div class="stat-item">
+        <div class="stat-label">Quality Pts</div>
+        <div class="stat-value" id="qualityPoints">0.00</div>
       </div>
     </div>
 
-    <!-- Grade Scale Modal -->
-    <div id="gradeModal" class="modal">
-      <div class="modal-content">
-        <span class="close" onclick="closeGradeScale()">&times;</span>
-        <h2>Grade Scale</h2>
-        <div class="grade-grid">
-          <div class="grade-cell">
-            <div class="grade-letter">A+ / A</div>
-            <div class="grade-value">4.00</div>
-          </div>
-          <div class="grade-cell">
-            <div class="grade-letter">A-</div>
-            <div class="grade-value">3.75</div>
-          </div>
-          <div class="grade-cell">
-            <div class="grade-letter">B+</div>
-            <div class="grade-value">3.25</div>
-          </div>
-          <div class="grade-cell">
-            <div class="grade-letter">B</div>
-            <div class="grade-value">3.00</div>
-          </div>
-          <div class="grade-cell">
-            <div class="grade-letter">B-</div>
-            <div class="grade-value">2.75</div>
-          </div>
-          <div class="grade-cell">
-            <div class="grade-letter">C+</div>
-            <div class="grade-value">2.25</div>
-          </div>
-          <div class="grade-cell">
-            <div class="grade-letter">C</div>
-            <div class="grade-value">2.00</div>
-          </div>
-          <div class="grade-cell">
-            <div class="grade-letter">C-</div>
-            <div class="grade-value">1.75</div>
-          </div>
-          <div class="grade-cell">
-            <div class="grade-letter">D+</div>
-            <div class="grade-value">1.25</div>
-          </div>
-          <div class="grade-cell">
-            <div class="grade-letter">D</div>
-            <div class="grade-value">1.00</div>
-          </div>
-          <div class="grade-cell">
-            <div class="grade-letter">D-</div>
-            <div class="grade-value">0.75</div>
-          </div>
-          <div class="grade-cell">
-            <div class="grade-letter">F</div>
-            <div class="grade-value">0.00</div>
-          </div>
-          <div class="grade-cell" style="border-color: #533483">
-            <div class="grade-letter">S</div>
-            <div class="grade-value">No GPA</div>
-          </div>
-          <div class="grade-cell" style="border-color: #533483">
-            <div class="grade-letter">NC</div>
-            <div class="grade-value">No GPA</div>
-          </div>
-          <div class="grade-cell" style="border-color: #533483">
-            <div class="grade-letter">T</div>
-            <div class="grade-value">No GPA</div>
-          </div>
+    <!-- Input Panel -->
+    <div class="input-panel">
+      <div class="input-grid">
+        <div>
+          <label for="courseName">Course Name</label>
+          <input type="text" id="courseName" placeholder="e.g. CS 1501 - Algorithms II" />
         </div>
+        <div>
+          <label for="credits">Credits</label>
+          <input type="number" id="credits" value="3" min="1" max="12" />
+        </div>
+        <div>
+          <label for="grade">Grade</label>
+          <select id="grade">
+            <option value="4.00">A+</option>
+            <option value="4.00">A</option>
+            <option value="3.75">A-</option>
+            <option value="3.25">B+</option>
+            <option value="3.00">B</option>
+            <option value="2.75">B-</option>
+            <option value="2.25">C+</option>
+            <option value="2.00">C</option>
+            <option value="1.75">C-</option>
+            <option value="1.25">D+</option>
+            <option value="1.00">D</option>
+            <option value="0.75">D-</option>
+            <option value="0.00">F</option>
+            <option value="S">S</option>
+            <option value="NC">NC</option>
+            <option value="T">T</option>
+          </select>
+        </div>
+        <div>
+          <label for="semester">Semester (Optional)</label>
+          <input type="text" id="semester" placeholder="e.g. (3) Fall 2025" />
+        </div>
+      </div>
+      <div class="button-row">
+        <button class="btn btn-add" onclick="addCourse()">+ Add Course</button>
+        <button class="btn btn-calc" onclick="showResults()">Calculate GPA</button>
       </div>
     </div>
 
-    <!-- Profile Modal -->
-    <div id="profileModal" class="modal">
-      <div class="modal-content">
-        <span class="close" onclick="closeProfileModal()">&times;</span>
-        <h2 id="profileModalTitle">New Profile</h2>
-        <div style="margin-top: 15px">
-          <label for="profileNameInput">Profile Name</label>
-          <input
-            type="text"
-            id="profileNameInput"
-            placeholder="e.g. Kevin's Grades"
-            style="margin-bottom: 15px"
-          />
-        </div>
-        <div class="button-row">
-          <button
-            class="btn btn-add"
-            id="profileModalBtn"
-            onclick="saveProfile()"
-          >
-            Create
-          </button>
-          <button
-            class="btn btn-clear"
-            id="profileDeleteBtn"
-            onclick="deleteProfile()"
-            style="display: none"
-          >
-            Delete Profile
-          </button>
-        </div>
-      </div>
+    <!-- Utility Buttons -->
+    <div class="utility-buttons">
+      <button class="btn btn-grade-scale" onclick="exportTxt()">📥 Export .txt</button>
+      <button class="btn btn-grade-scale" onclick="document.getElementById('importFile').click()">📤 Import .txt</button>
+      <input type="file" id="importFile" accept=".txt" style="display:none" onchange="importTxt(event)" />
+      <button class="btn btn-clear" onclick="clearAllCourses()">🗑️ Clear All</button>
     </div>
 
-    <!-- Weighted Grade Calculator Modal -->
-    <div id="weightedModal" class="modal">
-      <div class="modal-content modal-content-wide">
-        <span class="close" onclick="closeWeightedCalc()">&times;</span>
-        <h2>⚖️ Weighted Grade Calculator</h2>
-        <p
-          style="
-            color: #aaa;
-            font-size: 0.7rem;
-            margin-top: 8px;
-            margin-bottom: 15px;
-          "
-        >
-          Input your syllabus grading breakdown — just fill in your grade (%)
-          and the weight (%) for each category. Name is optional.
-        </p>
+    <!-- Courses Container -->
+    <div id="coursesContainer"></div>
 
-        <!-- Weighted rows rendered here -->
-        <div id="weightedItemsContainer"></div>
+    <!-- Results Area -->
+    <div id="resultsArea"></div>
 
-        <!-- Weighted result -->
-        <div
-          id="weightedResult"
-          class="weighted-result"
-          style="display: none"
-        ></div>
+    <!-- Info Note -->
+    <div class="info-note">
+      NOTE: Exclude Transfer credits, S/NC grades, and In Progress courses from GPA calculation. S, NC, and T grades are tracked but do not affect your GPA.
+    </div>
+  </div>
 
-        <div class="button-row" style="margin-top: 15px">
-          <button
-            class="btn btn-add"
-            onclick="
-              syncWeightedInputs();
-              addWeightedRow();
-            "
-          >
-            + Add Row
-          </button>
-          <button class="btn btn-calc" onclick="calculateWeighted()">
-            Calculate Weighted Grade
-          </button>
-          <button class="btn btn-clear" onclick="clearWeightedItems()">
-            Clear All
-          </button>
-        </div>
+  <!-- Grade Scale Modal -->
+  <div id="gradeModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeGradeScale()">&times;</span>
+      <h2>Grade Scale</h2>
+      <div class="grade-grid">
+        <div class="grade-cell"><div class="grade-letter">A+ / A</div><div class="grade-value">4.00</div></div>
+        <div class="grade-cell"><div class="grade-letter">A-</div><div class="grade-value">3.75</div></div>
+        <div class="grade-cell"><div class="grade-letter">B+</div><div class="grade-value">3.25</div></div>
+        <div class="grade-cell"><div class="grade-letter">B</div><div class="grade-value">3.00</div></div>
+        <div class="grade-cell"><div class="grade-letter">B-</div><div class="grade-value">2.75</div></div>
+        <div class="grade-cell"><div class="grade-letter">C+</div><div class="grade-value">2.25</div></div>
+        <div class="grade-cell"><div class="grade-letter">C</div><div class="grade-value">2.00</div></div>
+        <div class="grade-cell"><div class="grade-letter">C-</div><div class="grade-value">1.75</div></div>
+        <div class="grade-cell"><div class="grade-letter">D+</div><div class="grade-value">1.25</div></div>
+        <div class="grade-cell"><div class="grade-letter">D</div><div class="grade-value">1.00</div></div>
+        <div class="grade-cell"><div class="grade-letter">D-</div><div class="grade-value">0.75</div></div>
+        <div class="grade-cell"><div class="grade-letter">F</div><div class="grade-value">0.00</div></div>
+        <div class="grade-cell" style="border-color: #533483;"><div class="grade-letter">S</div><div class="grade-value">No GPA</div></div>
+        <div class="grade-cell" style="border-color: #533483;"><div class="grade-letter">NC</div><div class="grade-value">No GPA</div></div>
+        <div class="grade-cell" style="border-color: #533483;"><div class="grade-letter">T</div><div class="grade-value">No GPA</div></div>
       </div>
     </div>
+  </div>
 
-    <!-- Scripts -->
-    <script src="js/data.js"></script>
-    <script src="js/profiles.js"></script>
-    <script src="js/calculations.js"></script>
-    <script src="js/display.js"></script>
-    <script src="js/courseOperations.js"></script>
-    <script src="js/modal.js"></script>
-    <script src="js/importExport.js"></script>
-    <script src="js/weightedCalc.js"></script>
-    <script src="js/init.js"></script>
-  </body>
+  <!-- Profile Modal -->
+  <div id="profileModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeProfileModal()">&times;</span>
+      <h2 id="profileModalTitle">New Profile</h2>
+      <div style="margin-top: 15px;">
+        <label for="profileNameInput">Profile Name</label>
+        <input type="text" id="profileNameInput" placeholder="e.g. Kevin's Grades" style="margin-bottom: 15px;" />
+      </div>
+      <div class="button-row">
+        <button class="btn btn-add" id="profileModalBtn" onclick="saveProfile()">Create</button>
+        <button class="btn btn-clear" id="profileDeleteBtn" onclick="deleteProfile()" style="display:none;">Delete Profile</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Weighted Grade Calculator Modal -->
+  <div id="weightedModal" class="modal">
+    <div class="modal-content modal-content-wide">
+      <span class="close" onclick="closeWeightedCalc()">&times;</span>
+      <h2>⚖️ Weighted Grade Calculator</h2>
+      <p style="color: #aaa; font-size: 0.7rem; margin-top: 8px; margin-bottom: 15px;">
+        Input your syllabus grading breakdown — just fill in your grade (%) and the weight (%) for each category. Name is optional.
+      </p>
+
+      <!-- Weighted rows rendered here -->
+      <div id="weightedItemsContainer"></div>
+
+      <!-- Weighted result -->
+      <div id="weightedResult" class="weighted-result" style="display:none;"></div>
+
+      <div class="button-row" style="margin-top: 15px;">
+        <button class="btn btn-add" onclick="syncWeightedInputs(); addWeightedRow()">+ Add Row</button>
+        <button class="btn btn-calc" onclick="calculateWeighted()">Calculate Weighted Grade</button>
+        <button class="btn btn-clear" onclick="clearWeightedItems()">Clear All</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/profiles.js"></script>
+  <script src="js/calculations.js"></script>
+  <script src="js/display.js"></script>
+  <script src="js/courseOperations.js"></script>
+  <script src="js/modal.js"></script>
+  <script src="js/importExport.js"></script>
+  <script src="js/weightedCalc.js"></script>
+  <script src="js/init.js"></script>
+</body>
 </html>
