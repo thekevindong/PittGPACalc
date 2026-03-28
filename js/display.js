@@ -66,7 +66,7 @@ function displayCourses() {
         var index = item.index;
         var isNoGPA = isNonGPAGrade(course.grade);
         var qpDisplay = isNoGPA
-          ? "No GPA Impact"
+          ? "0.00"
           : (course.grade * course.credits).toFixed(2);
         var gradeClass = isNoGPA ? "course-grade-noweight" : "course-grade";
 
