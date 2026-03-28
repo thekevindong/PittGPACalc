@@ -7,14 +7,55 @@
   z-index: 900;
   background: linear-gradient(135deg, #0d1b3e 0%, #16213e 100%);
   border: 3px solid #003594;
-  padding: 12px;
   box-shadow: 0 6px 25px rgba(0, 0, 0, 0.5);
   max-width: 260px;
   animation: fadeIn 0.4s ease-in;
 }
 
+.toolbar-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background: #003594;
+  color: #ffb81c;
+  border: none;
+  border-bottom: 2px solid #003594;
+  padding: 10px 12px;
+  font-family: "Inter", sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: center;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: all 0.2s;
+  gap: 6px;
+}
+
+.toolbar-toggle:hover {
+  background: #0047ab;
+}
+
+.toolbar.collapsed .toolbar-toggle {
+  border-bottom: none;
+}
+
 .toolbar-section {
   margin-bottom: 8px;
+}
+
+.toolbar-content {
+  padding: 12px;
+}
+
+.toolbar.collapsed .toolbar-content {
+  display: none;
+}
+
+.toolbar.collapsed {
+  max-width: none;
+  width: auto;
 }
 
 .toolbar-section:last-child {
@@ -122,7 +163,6 @@
   opacity: 1;
 }
 
-/* Adjust container to not overlap toolbar */
 @media (min-width: 769px) {
   .container {
     margin-left: auto;
@@ -137,6 +177,10 @@
     left: 0;
     max-width: 100%;
     margin-bottom: 10px;
+  }
+
+  .toolbar-content {
+    padding: 10px;
   }
 
   .toolbar-profiles {

@@ -21,31 +21,40 @@
     <link rel="stylesheet" href="css/profiles.css" />
   </head>
   <body>
-    <!-- Top-Left Toolbar (fixed) -->
-    <div class="toolbar">
-      <div class="toolbar-section">
-        <div class="toolbar-label">Profiles</div>
-        <div class="toolbar-profiles">
-          <div class="profile-tabs" id="profileTabs"></div>
-          <button
-            class="btn-toolbar"
-            onclick="openProfileModal('add')"
-            title="Add Profile"
-          >
-            + New Profile
-          </button>
+    <!-- Top-Left Toolbar (fixed, collapsible) -->
+    <div class="toolbar" id="toolbar">
+      <button
+        class="toolbar-toggle"
+        id="toolbarToggle"
+        onclick="toggleToolbar()"
+      >
+        ☰ Menu
+      </button>
+      <div class="toolbar-content" id="toolbarContent">
+        <div class="toolbar-section">
+          <div class="toolbar-label">Profiles</div>
+          <div class="toolbar-profiles">
+            <div class="profile-tabs" id="profileTabs"></div>
+            <button
+              class="btn-toolbar"
+              onclick="openProfileModal('add')"
+              title="Add Profile"
+            >
+              + New Profile
+            </button>
+          </div>
         </div>
-      </div>
-      <div class="toolbar-divider"></div>
-      <div class="toolbar-section">
-        <div class="toolbar-label">Tools</div>
-        <div class="toolbar-tools">
-          <button class="btn-toolbar" onclick="openWeightedCalc()">
-            ⚖️ Weighted Grade Calculator
-          </button>
-          <button class="btn-toolbar" onclick="openGradeScale()">
-            📊 Grade Scale
-          </button>
+        <div class="toolbar-divider"></div>
+        <div class="toolbar-section">
+          <div class="toolbar-label">Tools</div>
+          <div class="toolbar-tools">
+            <button class="btn-toolbar" onclick="openWeightedCalc()">
+              ⚖️ Weighted Grade Calculator
+            </button>
+            <button class="btn-toolbar" onclick="openGradeScale()">
+              📊 Grade Scale
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -292,8 +301,8 @@
             margin-bottom: 15px;
           "
         >
-          Just fill in whatever information you got from your syllabus's grade (%)
-          and the weight (%) for each category.
+          Input your syllabus grading breakdown — just fill in your grade (%)
+          and the weight (%) for each category. Name is optional.
         </p>
 
         <!-- Weighted rows rendered here -->
