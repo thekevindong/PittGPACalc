@@ -163,6 +163,7 @@
   opacity: 1;
 }
 
+/* Adjust container to not overlap toolbar */
 @media (min-width: 769px) {
   .container {
     margin-left: auto;
