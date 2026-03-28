@@ -22,7 +22,7 @@ function updateStats() {
   var gpa = totalCredits > 0 ? totalQualityPoints / totalCredits : 0;
 
   document.getElementById("currentGPA").textContent = gpa.toFixed(3);
-  document.getElementById("totalCredits").textContent = totalCredits;
+  document.getElementById("totalCredits").textContent = totalAllCredits;
   document.getElementById("courseCount").textContent = courses.length;
   document.getElementById("qualityPoints").textContent = totalQualityPoints.toFixed(2);
 }
@@ -35,17 +35,19 @@ function showResults() {
 
   var totalQualityPoints = 0;
   var totalCredits = 0;
+  var totalAllCredits = 0;
   var sncCount = 0;
   var transferCount = 0;
 
   courses.forEach(function (course) {
     if (isNonGPAGrade(course.grade)) {
-      if (course.grade === "S") sncCount++;
-      else if (course.grade === "NC") sncCount++;
-      else if (course.grade === "T") transferCount++;
+      if (course.grade === "S") { sncCount++; totalAllCredits += course.credits; }
+      else if (course.grade === "NC") { sncCount++; }
+      else if (course.grade === "T") { transferCount++; totalAllCredits += course.credits; }
     } else {
       totalQualityPoints += course.grade * course.credits;
       totalCredits += course.credits;
+      totalAllCredits += course.credits;
     }
   });
 
@@ -68,7 +70,7 @@ function showResults() {
     '<div class="results-grid">' +
     '<div class="result-item">' +
     '<div class="result-label">Credits</div>' +
-    '<div class="result-value">' + totalCredits + "</div>" +
+    '<div class="result-value">' + totalAllCredits + "</div>" +
     "</div>" +
     '<div class="result-item">' +
     '<div class="result-label">Quality Points</div>' +
