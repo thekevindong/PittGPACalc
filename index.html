@@ -1,14 +1,14 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pitt GPA Calculator</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>">
-
-    <!-- CSS Files -->
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>"
+    />
     <link rel="stylesheet" href="css/base.css" />
-    <link rel="stylesheet" href="css/animations.css" />
     <link rel="stylesheet" href="css/header.css" />
     <link rel="stylesheet" href="css/stats.css" />
     <link rel="stylesheet" href="css/input.css" />
@@ -17,14 +17,54 @@
     <link rel="stylesheet" href="css/results.css" />
     <link rel="stylesheet" href="css/modal.css" />
     <link rel="stylesheet" href="css/misc.css" />
+    <link rel="stylesheet" href="css/animations.css" />
+    <link rel="stylesheet" href="css/profiles.css" />
   </head>
   <body>
+    <!-- Top-Left Toolbar (fixed) -->
+    <div class="toolbar">
+      <div class="toolbar-section">
+        <div class="toolbar-label">Profiles</div>
+        <div class="toolbar-profiles">
+          <div class="profile-tabs" id="profileTabs"></div>
+          <button
+            class="btn-toolbar"
+            onclick="openProfileModal('add')"
+            title="Add Profile"
+          >
+            + New Profile
+          </button>
+        </div>
+      </div>
+      <div class="toolbar-divider"></div>
+      <div class="toolbar-section">
+        <div class="toolbar-label">Tools</div>
+        <div class="toolbar-tools">
+          <button class="btn-toolbar" onclick="openWeightedCalc()">
+            ⚖️ Weighted Grade Calculator
+          </button>
+          <button class="btn-toolbar" onclick="openGradeScale()">
+            📊 Grade Scale
+          </button>
+        </div>
+      </div>
+    </div>
+
     <div class="container">
       <!-- Header -->
       <div class="header">
-        <h1>UNIVERSITY OF PITTSBURGH</h1>
-        <br />
-        <h1>GPA CALCULATOR<span class="emoji">🎓</span></h1>
+        <p
+          style="
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.55rem;
+            margin-bottom: 6px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+          "
+        >
+          University of Pittsburgh
+        </p>
+        <h1>GPA CALCULATOR <span class="emoji">🎓</span></h1>
       </div>
 
       <!-- Stats Bar -->
@@ -52,11 +92,15 @@
         <div class="input-grid">
           <div>
             <label for="courseName">Course Name</label>
-            <input type="text" id="courseName" placeholder="e.g., CS 1501" />
+            <input
+              type="text"
+              id="courseName"
+              placeholder="e.g. CS 1501 - Algorithms II"
+            />
           </div>
           <div>
             <label for="credits">Credits</label>
-            <input type="number" id="credits" min="1" max="12" value="3" />
+            <input type="number" id="credits" value="3" min="1" max="12" />
           </div>
           <div>
             <label for="grade">Grade</label>
@@ -74,14 +118,16 @@
               <option value="1.00">D</option>
               <option value="0.75">D-</option>
               <option value="0.00">F</option>
+              <option value="S">S</option>
+              <option value="NC">NC</option>
+              <option value="T">T</option>
             </select>
           </div>
           <div>
             <label for="semester">Semester (Optional)</label>
-            <input type="text" id="semester" placeholder="e.g., Fall 2025" />
+            <input type="text" id="semester" placeholder="e.g. (3) Fall 2025" />
           </div>
         </div>
-
         <div class="button-row">
           <button class="btn btn-add" onclick="addCourse()">
             + Add Course
@@ -94,9 +140,22 @@
 
       <!-- Utility Buttons -->
       <div class="utility-buttons">
-        <button class="btn-grade-scale" onclick="openGradeScale()">
-          📊 Grade Scale
+        <button class="btn btn-grade-scale" onclick="exportTxt()">
+          📥 Export .txt
         </button>
+        <button
+          class="btn btn-grade-scale"
+          onclick="document.getElementById('importFile').click()"
+        >
+          📤 Import .txt
+        </button>
+        <input
+          type="file"
+          id="importFile"
+          accept=".txt"
+          style="display: none"
+          onchange="importTxt(event)"
+        />
         <button class="btn btn-clear" onclick="clearAllCourses()">
           🗑️ Clear All
         </button>
@@ -111,6 +170,8 @@
       <!-- Info Note -->
       <div class="info-note">
         NOTE: Exclude Transfer credits, S/NC grades, and In Progress courses
+        from GPA calculation. S, NC, and T grades are tracked but do not affect
+        your GPA.
       </div>
     </div>
 
@@ -118,14 +179,10 @@
     <div id="gradeModal" class="modal">
       <div class="modal-content">
         <span class="close" onclick="closeGradeScale()">&times;</span>
-        <h2>GRADE SCALE</h2>
+        <h2>Grade Scale</h2>
         <div class="grade-grid">
           <div class="grade-cell">
-            <div class="grade-letter">A+</div>
-            <div class="grade-value">4.00</div>
-          </div>
-          <div class="grade-cell">
-            <div class="grade-letter">A</div>
+            <div class="grade-letter">A+ / A</div>
             <div class="grade-value">4.00</div>
           </div>
           <div class="grade-cell">
@@ -172,82 +229,112 @@
             <div class="grade-letter">F</div>
             <div class="grade-value">0.00</div>
           </div>
-        </div>
-
-        <!-- Honors Requirements -->
-        <div
-          style="
-            margin-top: 25px;
-            padding: 20px;
-            background: #0f3460;
-            border: 2px solid #ffb81c;
-            border-radius: 8px;
-          "
-        >
-          <h3
-            style="
-              color: #ffb81c;
-              font-size: 0.9rem;
-              margin-bottom: 15px;
-              font-family: 'Press Start 2P', cursive;
-            "
-          >
-            GRADUATION HONORS
-          </h3>
-          <div
-            style="display: grid; gap: 10px; color: #fff; font-size: 0.85rem"
-          >
-            <div
-              style="
-                display: flex;
-                justify-content: space-between;
-                padding: 8px;
-                background: rgba(78, 204, 163, 0.1);
-                border-radius: 4px;
-              "
-            >
-              <span style="color: #4ecca3; font-weight: 700"
-                >Summa Cum Laude</span
-              >
-              <span style="color: #ffb81c">3.75+</span>
-            </div>
-            <div
-              style="
-                display: flex;
-                justify-content: space-between;
-                padding: 8px;
-                background: rgba(78, 204, 163, 0.1);
-                border-radius: 4px;
-              "
-            >
-              <span style="color: #4ecca3; font-weight: 700"
-                >Magna Cum Laude</span
-              >
-              <span style="color: #ffb81c">3.50+</span>
-            </div>
-            <div
-              style="
-                display: flex;
-                justify-content: space-between;
-                padding: 8px;
-                background: rgba(78, 204, 163, 0.1);
-                border-radius: 4px;
-              "
-            >
-              <span style="color: #4ecca3; font-weight: 700">Cum Laude</span>
-              <span style="color: #ffb81c">3.25+</span>
-            </div>
+          <div class="grade-cell" style="border-color: #533483">
+            <div class="grade-letter">S</div>
+            <div class="grade-value">No GPA</div>
+          </div>
+          <div class="grade-cell" style="border-color: #533483">
+            <div class="grade-letter">NC</div>
+            <div class="grade-value">No GPA</div>
+          </div>
+          <div class="grade-cell" style="border-color: #533483">
+            <div class="grade-letter">T</div>
+            <div class="grade-value">No GPA</div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- JavaScript Files -->
+    <!-- Profile Modal -->
+    <div id="profileModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeProfileModal()">&times;</span>
+        <h2 id="profileModalTitle">New Profile</h2>
+        <div style="margin-top: 15px">
+          <label for="profileNameInput">Profile Name</label>
+          <input
+            type="text"
+            id="profileNameInput"
+            placeholder="e.g. Kevin's Grades"
+            style="margin-bottom: 15px"
+          />
+        </div>
+        <div class="button-row">
+          <button
+            class="btn btn-add"
+            id="profileModalBtn"
+            onclick="saveProfile()"
+          >
+            Create
+          </button>
+          <button
+            class="btn btn-clear"
+            id="profileDeleteBtn"
+            onclick="deleteProfile()"
+            style="display: none"
+          >
+            Delete Profile
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Weighted Grade Calculator Modal -->
+    <div id="weightedModal" class="modal">
+      <div class="modal-content modal-content-wide">
+        <span class="close" onclick="closeWeightedCalc()">&times;</span>
+        <h2>⚖️ Weighted Grade Calculator</h2>
+        <p
+          style="
+            color: #aaa;
+            font-size: 0.7rem;
+            margin-top: 8px;
+            margin-bottom: 15px;
+          "
+        >
+          Just fill in whatever information you got from your syllabus's grade (%)
+          and the weight (%) for each category.
+        </p>
+
+        <!-- Weighted rows rendered here -->
+        <div id="weightedItemsContainer"></div>
+
+        <!-- Weighted result -->
+        <div
+          id="weightedResult"
+          class="weighted-result"
+          style="display: none"
+        ></div>
+
+        <div class="button-row" style="margin-top: 15px">
+          <button
+            class="btn btn-add"
+            onclick="
+              syncWeightedInputs();
+              addWeightedRow();
+            "
+          >
+            + Add Row
+          </button>
+          <button class="btn btn-calc" onclick="calculateWeighted()">
+            Calculate Weighted Grade
+          </button>
+          <button class="btn btn-clear" onclick="clearWeightedItems()">
+            Clear All
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
     <script src="js/data.js"></script>
-    <script src="js/courseOperations.js"></script>
-    <script src="js/display.js"></script>
+    <script src="js/profiles.js"></script>
     <script src="js/calculations.js"></script>
+    <script src="js/display.js"></script>
+    <script src="js/courseOperations.js"></script>
     <script src="js/modal.js"></script>
+    <script src="js/importExport.js"></script>
+    <script src="js/weightedCalc.js"></script>
     <script src="js/init.js"></script>
   </body>
 </html>

@@ -1,0 +1,427 @@
+/* ===== Top-Left Toolbar ===== */
+
+.toolbar {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  z-index: 900;
+  background: linear-gradient(135deg, #0d1b3e 0%, #16213e 100%);
+  border: 3px solid #003594;
+  padding: 12px;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.5);
+  max-width: 260px;
+  animation: fadeIn 0.4s ease-in;
+}
+
+.toolbar-section {
+  margin-bottom: 8px;
+}
+
+.toolbar-section:last-child {
+  margin-bottom: 0;
+}
+
+.toolbar-label {
+  color: #ffb81c;
+  font-family: "Press Start 2P", cursive;
+  font-size: 0.5rem;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.toolbar-divider {
+  height: 2px;
+  background: #003594;
+  margin: 10px 0;
+}
+
+.toolbar-profiles {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.toolbar-tools {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.btn-toolbar {
+  background: #0f3460;
+  color: #4ecca3;
+  border: 2px solid #003594;
+  padding: 6px 10px;
+  font-family: "Inter", sans-serif;
+  font-size: 0.6rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.btn-toolbar:hover {
+  border-color: #4ecca3;
+  background: #1a2942;
+  box-shadow: 0 0 8px rgba(78, 204, 163, 0.2);
+}
+
+/* ===== Profile Tabs (inside toolbar) ===== */
+
+.profile-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.profile-tab {
+  padding: 5px 10px;
+  background: #0f3460;
+  border: 2px solid #003594;
+  color: #aaa;
+  font-family: "Inter", sans-serif;
+  font-size: 0.6rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.profile-tab:hover {
+  border-color: #4ecca3;
+  color: #4ecca3;
+}
+
+.profile-tab.active {
+  background: #003594;
+  border-color: #ffb81c;
+  color: #ffb81c;
+  box-shadow: 0 0 8px rgba(255, 184, 28, 0.3);
+}
+
+.profile-tab-name {
+  pointer-events: none;
+}
+
+.profile-tab .edit-icon {
+  font-size: 0.5rem;
+  opacity: 0.4;
+  cursor: pointer;
+  pointer-events: all;
+  margin-left: 8px;
+}
+
+.profile-tab .edit-icon:hover {
+  opacity: 1;
+}
+
+/* Adjust container to not overlap toolbar */
+@media (min-width: 769px) {
+  .container {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .toolbar {
+    position: relative;
+    top: 0;
+    left: 0;
+    max-width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .toolbar-profiles {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .profile-tabs {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .toolbar-tools {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 480px) {
+  .toolbar {
+    padding: 8px;
+    border-width: 2px;
+  }
+
+  .toolbar-label {
+    font-size: 0.4rem;
+    margin-bottom: 6px;
+  }
+
+  .toolbar-divider {
+    margin: 6px 0;
+  }
+
+  .btn-toolbar {
+    font-size: 0.5rem;
+    padding: 5px 8px;
+  }
+
+  .profile-tab {
+    font-size: 0.5rem;
+    padding: 4px 8px;
+  }
+
+  .toolbar-profiles {
+    gap: 4px;
+  }
+
+  .toolbar-tools {
+    gap: 4px;
+  }
+
+  .profile-tabs {
+    gap: 3px;
+  }
+
+  .course-grade-noweight {
+    padding: 4px 8px;
+    font-size: 0.65rem;
+  }
+}
+
+/* ===== S/NC/T grade badge ===== */
+
+.course-grade-noweight {
+  background: #533483;
+  color: #fff;
+  padding: 5px 10px;
+  font-weight: 700;
+  margin-right: 8px;
+  font-size: 0.75rem;
+}
+
+/* ===== Weighted Grade Calculator ===== */
+
+.modal-content-wide {
+  max-width: 700px;
+}
+
+.weighted-row-header {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 36px;
+  gap: 8px;
+  padding: 0 2px;
+  margin-bottom: 6px;
+}
+
+.weighted-col-label {
+  color: #ffb81c;
+  font-size: 0.55rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.weighted-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 36px;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 6px;
+  animation: fadeInUp 0.3s ease-out;
+}
+
+.weighted-row input {
+  width: 100%;
+  padding: 7px;
+  background: #0f3460;
+  border: 2px solid #003594;
+  color: #fff;
+  font-family: "Inter", sans-serif;
+  font-size: 0.75rem;
+  transition: all 0.3s;
+}
+
+.weighted-row input:focus {
+  outline: none;
+  border-color: #4ecca3;
+  box-shadow: 0 0 10px rgba(78, 204, 163, 0.3);
+}
+
+.weighted-row input::placeholder {
+  color: rgba(255, 255, 255, 0.25);
+}
+
+.weighted-row-cat {
+  color: #4ecca3 !important;
+}
+
+.weighted-input-pct {
+  display: flex;
+  align-items: stretch;
+}
+
+.weighted-input-pct input {
+  flex: 1;
+  min-width: 0;
+  border-right: none !important;
+}
+
+.pct-sign {
+  background: #0f3460;
+  border: 2px solid #003594;
+  border-left: none;
+  color: #aaa;
+  padding: 0 8px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.weighted-item-remove {
+  background: #e84545;
+  color: #fff;
+  border: none;
+  padding: 6px 8px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: "Inter", sans-serif;
+  transition: all 0.2s;
+  text-align: center;
+  line-height: 1;
+}
+
+.weighted-item-remove:hover {
+  background: #ff6b6b;
+}
+
+.weighted-result {
+  background: linear-gradient(135deg, #16213e 0%, #0f3460 100%);
+  border: 3px solid #ffb81c;
+  padding: 20px;
+  text-align: center;
+  margin-top: 15px;
+  animation: popIn 0.4s ease-out;
+}
+
+.weighted-result-grade {
+  color: #4ecca3;
+  font-size: 2rem;
+  font-weight: 700;
+  font-family: "Press Start 2P", cursive;
+  margin: 8px 0;
+}
+
+.weighted-result-letter {
+  color: #ffb81c;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.weighted-result-label {
+  color: #aaa;
+  font-size: 0.7rem;
+  margin-bottom: 5px;
+}
+
+.weighted-weight-bar {
+  height: 8px;
+  background: #0a0e27;
+  border: 1px solid #003594;
+  margin-top: 12px;
+  overflow: hidden;
+}
+
+.weighted-weight-fill {
+  height: 100%;
+  background: #4ecca3;
+  transition: width 0.3s;
+}
+
+.weighted-weight-over {
+  background: #e84545;
+}
+
+.weighted-weight-info {
+  color: #aaa;
+  font-size: 0.6rem;
+  margin-top: 4px;
+  text-align: right;
+}
+
+@media (max-width: 768px) {
+  .weighted-row-header {
+    display: none;
+  }
+
+  .weighted-row {
+    grid-template-columns: 1fr 1fr 1fr 32px;
+    gap: 6px;
+  }
+
+  .weighted-row-cat {
+    grid-column: 1 / -1;
+  }
+
+  .weighted-row input {
+    font-size: 0.7rem;
+    padding: 6px;
+  }
+
+  .pct-sign {
+    font-size: 0.65rem;
+    padding: 0 5px;
+  }
+
+  .weighted-item-remove {
+    padding: 6px 6px;
+    font-size: 0.6rem;
+  }
+
+  .weighted-result-grade {
+    font-size: 1.5rem;
+  }
+
+  .weighted-result-letter {
+    font-size: 0.85rem;
+  }
+
+  .weighted-result-label {
+    font-size: 0.6rem;
+  }
+
+  .weighted-result {
+    padding: 14px;
+  }
+
+  .weighted-weight-info {
+    font-size: 0.5rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .weighted-row {
+    grid-template-columns: 1fr 1fr 32px;
+    gap: 4px;
+  }
+
+  .weighted-row-cat {
+    grid-column: 1 / -1;
+  }
+
+  .weighted-row-grade {
+    grid-column: auto;
+  }
+}

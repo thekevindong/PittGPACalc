@@ -9,36 +9,271 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* Responsive Design */
+/* ===== Responsive Design ===== */
+
+/* Tablet */
 @media (max-width: 768px) {
   .input-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .input-grid > div:first-child {
+    grid-column: 1 / -1;
   }
 
   .grade-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
   }
 
   .results-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, 1fr);
   }
 
   h1 {
-    font-size: 1rem;
+    font-size: 0.95rem;
   }
 
   .gpa-big {
-    font-size: 3rem;
+    font-size: 2.5rem;
   }
 
   .semester-header {
     flex-direction: column;
-    gap: 15px;
+    gap: 8px;
     align-items: flex-start;
   }
 
   .semester-stats {
-    flex-direction: column;
+    flex-wrap: wrap;
     gap: 8px;
+  }
+
+  .semester-title {
+    font-size: 0.6rem;
+  }
+
+  .course-info h3 {
+    font-size: 0.7rem;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  body {
+    padding: 8px;
+  }
+
+  .container {
+    transform: none;
+  }
+
+  /* Header */
+  .header {
+    padding: 14px 10px;
+    margin-bottom: 12px;
+    border-width: 3px;
+  }
+
+  .header p {
+    font-size: 0.45rem !important;
+    letter-spacing: 1px !important;
+  }
+
+  h1 {
+    font-size: 0.7rem;
+    gap: 6px;
+  }
+
+  h1 .emoji {
+    font-size: 0.85rem;
+  }
+
+  /* Stats bar - 2x2 grid on small screens */
+  .stats-bar {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+  .stat-label {
+    font-size: 0.5rem;
+  }
+
+  .stat-value {
+    font-size: 0.85rem;
+  }
+
+  /* Input panel */
+  .input-panel {
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+  .input-grid {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .input-grid > div:first-child {
+    grid-column: 1;
+  }
+
+  label {
+    font-size: 0.55rem;
+  }
+
+  input,
+  select {
+    padding: 8px 6px;
+    font-size: 0.75rem;
+  }
+
+  /* Buttons */
+  .button-row {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .btn {
+    padding: 8px 12px;
+    font-size: 0.6rem;
+  }
+
+  .btn-grade-scale {
+    padding: 8px 10px;
+    font-size: 0.6rem;
+  }
+
+  .utility-buttons {
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+
+  /* Course items */
+  .semester-section {
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+  .semester-title {
+    font-size: 0.5rem;
+    line-height: 1.4;
+  }
+
+  .semester-stats {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 6px;
+    font-size: 0.55rem;
+  }
+
+  .course-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 10px;
+  }
+
+  .course-item:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .course-info {
+    width: 100%;
+  }
+
+  .course-info h3 {
+    font-size: 0.65rem;
+    word-break: break-word;
+  }
+
+  .course-info p {
+    font-size: 0.6rem;
+  }
+
+  .course-grade,
+  .course-grade-noweight {
+    font-size: 0.65rem;
+    padding: 4px 8px;
+  }
+
+  .btn-edit,
+  .btn-remove {
+    padding: 6px 10px;
+    font-size: 0.6rem;
+  }
+
+  /* Results */
+  .results-box {
+    padding: 18px 12px;
+  }
+
+  .results-title {
+    font-size: 0.6rem;
+  }
+
+  .gpa-big {
+    font-size: 2rem;
+  }
+
+  .gpa-label {
+    font-size: 0.65rem;
+  }
+
+  .results-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .result-label {
+    font-size: 0.55rem;
+  }
+
+  .result-value {
+    font-size: 1.1rem;
+  }
+
+  /* Modals */
+  .modal-content {
+    margin: 10% auto;
+    padding: 18px;
+    width: 95%;
+  }
+
+  .modal-content-wide {
+    width: 95%;
+  }
+
+  .modal h2 {
+    font-size: 0.85rem;
+  }
+
+  .grade-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+
+  .grade-cell {
+    padding: 10px 6px;
+  }
+
+  .grade-letter {
+    font-size: 0.85rem;
+  }
+
+  .grade-value {
+    font-size: 0.65rem;
+  }
+
+  /* Info note */
+  .info-note {
+    padding: 10px;
+    font-size: 0.65rem;
   }
 }

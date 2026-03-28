@@ -1,7 +1,7 @@
-// Display Functions - Render courses by semester
+// Display Functions - Render courses by semester (S/NC/T aware)
 
 function displayCourses() {
-  const container = document.getElementById("coursesContainer");
+  var container = document.getElementById("coursesContainer");
 
   if (courses.length === 0) {
     container.innerHTML =
@@ -10,72 +10,60 @@ function displayCourses() {
   }
 
   // Group courses by semester
-  const semesterGroups = {};
+  var semesterGroups = {};
   courses.forEach(function (course, index) {
-    const sem = course.semester || "Courses";
+    var sem = course.semester || "Courses";
     if (!semesterGroups[sem]) {
       semesterGroups[sem] = [];
     }
     semesterGroups[sem].push({ course: course, index: index });
   });
 
-  let html = "";
+  var html = "";
 
-  // Display each semester group
   Object.keys(semesterGroups)
     .sort()
     .forEach(function (semester) {
-      const group = semesterGroups[semester];
+      var group = semesterGroups[semester];
 
-      // Calculate semester stats
-      let semCredits = 0;
-      let semQP = 0;
+      // Calculate semester stats (exclude S/NC/T from GPA)
+      var semCredits = 0;
+      var semQP = 0;
+      var semAllCount = group.length;
       group.forEach(function (item) {
-        semCredits += item.course.credits;
-        semQP += item.course.grade * item.course.credits;
+        if (!isNonGPAGrade(item.course.grade)) {
+          semCredits += item.course.credits;
+          semQP += item.course.grade * item.course.credits;
+        }
       });
-      const semGPA = semCredits > 0 ? (semQP / semCredits).toFixed(3) : "0.000";
+      var semGPA = semCredits > 0 ? (semQP / semCredits).toFixed(3) : "N/A";
 
       html += '<div class="semester-section">';
       html += '<div class="semester-header">';
       html += '<div class="semester-title">' + semester + "</div>";
       html += '<div class="semester-stats">';
-      html +=
-        '<div class="semester-stat">GPA: <span>' + semGPA + "</span></div>";
-      html +=
-        '<div class="semester-stat">Credits: <span>' +
-        semCredits +
-        "</span></div>";
-      html +=
-        '<div class="semester-stat">QP: <span>' +
-        semQP.toFixed(2) +
-        "</span></div>";
+      html += '<div class="semester-stat">GPA: <span>' + semGPA + "</span></div>";
+      html += '<div class="semester-stat">Credits: <span>' + semCredits + "</span></div>";
+      html += '<div class="semester-stat">QP: <span>' + semQP.toFixed(2) + "</span></div>";
       html += "</div>";
       html += "</div>";
 
       group.forEach(function (item) {
-        const course = item.course;
-        const index = item.index;
+        var course = item.course;
+        var index = item.index;
+        var isNoGPA = isNonGPAGrade(course.grade);
+        var qpDisplay = isNoGPA ? "No GPA Impact" : (course.grade * course.credits).toFixed(2);
+        var gradeClass = isNoGPA ? "course-grade-noweight" : "course-grade";
+
         html += '<div class="course-item">';
         html += '<div class="course-info">';
         html += "<h3>" + course.name + "</h3>";
-        html +=
-          "<p>" +
-          course.credits +
-          " credits • Quality Points: " +
-          (course.grade * course.credits).toFixed(2) +
-          "</p>";
+        html += "<p>" + course.credits + " credits • Quality Points: " + qpDisplay + "</p>";
         html += "</div>";
         html += '<div style="display: flex; align-items: center;">';
-        html += '<span class="course-grade">' + course.gradeLabel + "</span>";
-        html +=
-          '<button class="btn btn-edit" onclick="editCourse(' +
-          index +
-          ')">Edit</button>';
-        html +=
-          '<button class="btn btn-remove" onclick="removeCourse(' +
-          index +
-          ')">Remove</button>';
+        html += '<span class="' + gradeClass + '">' + course.gradeLabel + "</span>";
+        html += '<button class="btn btn-edit" onclick="editCourse(' + index + ')">Edit</button>';
+        html += '<button class="btn btn-remove" onclick="removeCourse(' + index + ')">Remove</button>';
         html += "</div>";
         html += "</div>";
       });
